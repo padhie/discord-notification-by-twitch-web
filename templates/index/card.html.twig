@@ -1,0 +1,32 @@
+{% set id = notification.getId() %}
+{% set channel = notification.getChannel() %}
+{% set webHook = notification.getWebHook() %}
+{% set message = notification.getMessage() %}
+
+<div class="col-md-4 mt-2 mb-3">
+
+    <div class="card bg-light">
+        <input type="hidden" id="streamer_user" name="streamer[{{ id }}][user]" value="{{ user }}">
+
+        <span class="fa fa-location-arrow testHook ml-1 mt-1 text-primary" data-channel="{{ channel }}" data-id="{{ id }}" title="test"></span>
+        <span class="fa fa-times removeBox mr-1 mt-1 text-danger" title="remove"></span>
+
+        <div class="card-body">
+            <div class="form-group">
+                <label for="streamer_channel">Channel</label>
+                <input type="text" class="form-control" id="streamer_channel" name="streamer[{{ id }}][channel]" value="{{ channel }}">
+            </div>
+
+            <div class="form-group">
+                <label for="streamer_webhook">WebHook URL</label>
+                <input type="text" class="form-control" id="streamer_webhook" name="streamer[{{ id }}][webHook]" value="{{ webHook }}">
+            </div>
+
+            <div class="form-group">
+                <label for="streamer_message">Message</label>
+                <textarea class="form-control" id="streamer_message" rows="5" name="streamer[{{ id }}][message]">{{ message }}</textarea>
+            </div>
+        </div>
+    </div>
+
+</div>

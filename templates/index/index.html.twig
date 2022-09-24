@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+
+        <div class="offset-md-1 col-md-7">
+            <form id="form" action="{{ path('save') }}" method="post">
+                {% include 'index/form.html.twig' with {'notifications':notifications} %}
+            </form>
+        </div>
+
+        <div class="col-md-2">
+            {% include 'index/sidebox.html.twig' %}
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .testHook {
+            position: absolute;
+            left: 0;
+        }
+
+        .removeBox {
+            position: absolute;
+            right: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        const currentUser = '{{ currentUser.getUsername() }}';
+        const userArea = 'box-' + currentUser;
+
+        function addBox() {
+            addUserArea();
+
+            let div = document.createElement('div');
+            div.classList.add('col-md-4');
+            div.classList.add('float-left');
+            div.classList.add('mt-2');
+            div.classList.add('mb-3');
+
+            let card = document.createElement('div');
+            card.classList.add('card');
+            card.classList.add('bg-light');
+            div.append(card);
+
+            let cardBody = document.createElement('div');
+            cardBody.classList.add('card-body');
+            card.append(cardBody);
+
+            card.append(createNewBadge());
+            card.append(createCloseIcon());
+
+            cardBody.append(createChannelDiv());
+            cardBody.append(createWebhookDiv());
+            cardBody.append(createMessageDiv());
+
+            document.getElementById(userArea).append(div);
+        }
+
+        function addUserArea() {
+            if (document.getElementById(userArea) !== null) {
+                return;
+            }
+
+            let div = document.createElement('div');
+            div.id = userArea;
+            div.classList.add('col-md-12');
+            div.classList.add('row');
+
+            let headline = document.createElement('h1');
+            headline.classList.add('h1');
+            headline.classList.add('col-md-12');
+            headline.classList.add('border-bottom');
+            headline.innerText = currentUser;
+
+            document.getElementById('cardList').append(div);
+
+            div.append(headline);
+        }
+
+        function removeBox(element) {
+            let box = element.parentElement.parentElement;
+            let parendBox = box.parentNode;
+
+            parendBox.removeChild(box);
+        }
+
+        function createChannelDiv() {
+           let formGroup = document.createElement('div');
+            formGroup.classList.add('form-group');
+
+            let label = document.createElement('label');
+            label.attributes.for = 'streamer_channel';
+            label.innerText = 'Channel';
+            formGroup.append(label);
+
+            let input = document.createElement('input');
+            input.classList.add('form-control');
+            input.type = 'text';
+            input.id = 'streamer_channel';
+            input.name = 'newStreamer[channel][]';
+            formGroup.append(input);
+
+            return formGroup;
+        }
+
+        function createWebhookDiv() {
+           let formGroup = document.createElement('div');
+            formGroup.classList.add('form-group');
+
+            let label = document.createElement('label');
+            label.attributes.for = 'streamer_webhook';
+            label.innerText = 'WebHook URL';
+            formGroup.append(label);
+
+            let input = document.createElement('input');
+            input.classList.add('form-control');
+            input.type = 'text';
+            input.id = 'streamer_webhook';
+            input.name = 'newStreamer[webHook][]';
+            formGroup.append(input);
+
+            return formGroup;
+        }
+
+        function createMessageDiv() {
+            let formGroup = document.createElement('div');
+            formGroup.classList.add('form-group');
+
+            let label = document.createElement('label');
+            label.attributes.for = 'streamer_webhook';
+            label.innerText = 'Message';
+            formGroup.append(label);
+
+            let input = document.createElement('textarea');
+            input.classList.add('form-control');
+            input.id = 'streamer_message';
+            input.rows = 5
+            input.name = 'newStreamer[message][]';
+            formGroup.append(input);
+
+            return formGroup;
+        }
+
+        function createNewBadge() {
+            let badge = document.createElement('spam');
+
+            badge.classList.add('badge');
+            badge.classList.add('badge-warning');
+            badge.classList.add('testHook');
+            badge.classList.add('ml-1');
+            badge.classList.add('mt-1');
+
+            badge.innerText = 'New';
+
+            return badge;
+        }
+
+        function createCloseIcon() {
+            let icon = document.createElement('spam');
+
+            icon.classList.add('fa');
+            icon.classList.add('fa-times');
+            icon.classList.add('removeBox');
+            icon.classList.add('mr-1');
+            icon.classList.add('mt-1');
+            icon.classList.add('text-danger');
+
+            icon.title = "remove";
+
+            return icon;
+        }
+
+        function testHook(element) {
+            let id = element.dataset.id;
+            if (id === '') {
+                return;
+            }
+
+            fetch('{{ path('test') }}?id=' + id)
+                .then(response => response.json())
+                .then(data => console.log(data));
+        }
+
+        document.getElementById('submit').addEventListener('click', function() {
+            document.getElementById('form').submit();
+        });
+
+        document.getElementById('addBox').addEventListener('click', function () {
+            addBox();
+        });
+
+        let testBoxElements = document.getElementsByClassName('testHook');
+        for (let i=0; i<testBoxElements.length; i++) {
+            testBoxElements[i].addEventListener('click', function() {
+                testHook(this);
+            });
+        }
+
+        let closeBoxElements = document.getElementsByClassName('removeBox');
+        for (let j=0; j<closeBoxElements.length; j++) {
+            closeBoxElements[j].addEventListener('click', function () {
+                removeBox(this);
+            });
+        }
+    </script>
+{% endblock %}

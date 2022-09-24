@@ -1,0 +1,96 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    App\Form\:
+        autowire: true
+        resource: '../src/Form/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    # EventListener
+    App\EventListener\ExceptionListener:
+        autowire: true
+        tags:
+            - { name: kernel.event_listener }
+
+    App\EventListener\UserPreloadListener:
+        autowire: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Security\UserAuthenticator:
+        arguments:
+            $users: '%env(USERS)%'
+
+    App\Service\StreamerService:
+        arguments:
+            $baseDirectory: '%env(ROOT_DIRECTORY)%'
+
+    App\Service\LastStateService:
+        arguments:
+            $baseDirectory: '%env(ROOT_DIRECTORY)%'
+
+    App\Service\Updater\Streamer\StreamerUpdaterCollection:
+        arguments:
+            $updaterList:
+                - '@App\Service\Updater\Streamer\V1Updater'
+                - '@App\Service\Updater\Streamer\V2Updater'
+                - '@App\Service\Updater\Streamer\V3Updater'
+
+    App\Service\Updater\Streamer\V3Updater:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+
+    App\Model\TwitchConfig:
+        arguments:
+            $url: '%env(TWITCH_URL)%'
+            $clientId: '%env(TWITCH_CLIENT_ID)%'
+
+    App\Model\InfluxConfig:
+        arguments:
+            $url: '%env(INFLUX_URL)%'
+            $db: '%env(INFLUX_DB)%'
+
+    App\Model\ErrorConfig:
+        arguments:
+            $project: '%env(ERROR_PROJECT)%'
+            $discordUrl: '%env(ERROR_DISCORD_URL)%'
+
+    App\Builder\TwitchClientBuilder:
+        arguments:
+            - '%env(TWITCH_CLIENT_ID)%'
+            - '%env(TWITCH_SECRET)%'
+
+    Symfony\Component\Form\FormFactory:
+        alias: form.factory
+
+    Monolog\Logger:
+        arguments:
+            - 'discord-notification'

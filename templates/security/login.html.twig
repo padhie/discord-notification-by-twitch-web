@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+    <div class="row justify-content-md-center mt-5 pt-5">
+        <div class="col-md-3">
+
+            <form method="post" action="{{ url("login") }}">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                <div class="card bg-light">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-control" placeholder="Username" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Password" />
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success pull-right">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+<div class="col-md-12 row m-0 p-0 mt-2">
+    <button type="button" id="addBox" class="btn btn-primary col-md-5" title="add">
+        <span class="fa fa-plus"></span>
+    </button>
+
+    <button type="button" id="submit" class="btn btn-success offset-md-2 col-md-5 pull-right" title="save">
+        <span class="fa fa-save"></span>
+    </button>
+</div>
+
+{% if currentUser != null and currentUser.isAdmin() %}
+    <div class="col-md-12 row m-0 p-0 mt-2">
+        <a href="{{ url('settings') }}" class="btn btn-warning col-md-12">
+            <span class="fa fa-fog"></span> Settings
+        </a>
+    </div>
+{% endif %}
