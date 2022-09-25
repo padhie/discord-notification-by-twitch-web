@@ -1,0 +1,15 @@
+name: Discord Notification
+on: [push]
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo $SERVER_PORT
+            - run: echo $SERVER_LOGIN
+            - run: echo $SERVER_HOST
+            - run: echo $SERVER_DIRECTORY
+            - run: echo ${{ FOOBAR }}
+
+            - run: sshpass -V
+            - run: export SSHPASS=$SERVER_PASS
+            - run: sshpass -p "$SERVER_PASS" ssh -p $SERVER_PORT -o 'StrictHostKeyChecking no' $SERVER_LOGIN@$SERVER_HOST "cd $SERVER_DIRECTORY && dep deploy"
