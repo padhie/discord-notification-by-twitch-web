@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="pull-right mb-1">
+        <a class="btn btn-success" href="{{ url('user_new') }}">add User</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="border-top-0">#</th>
+                <th class="border-top-0">Username</th>
+                <th class="border-top-0">Roles</th>
+                <th class="border-top-0">Notifications</th>
+                <th class="border-top-0"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.getId() }}</th>
+                    <td>{{ user.getUsername() }}</td>
+                    <td>{{ user.getRolesAsString() }}</td>
+                    <td>{{ user.getNotifications().count() }}</td>
+                    <td>
+                        <a href="{{ url('user_edit', {id: user.getId()}) }}" title="edit User">
+                            <span class="fa fa-pencil"></span>
+                        </a>
+
+                        <a href="{{ url('user_delete', {id: user.getId()}) }}" title="delete User">
+                            <span class="fa fa-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

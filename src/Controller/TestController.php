@@ -76,7 +76,7 @@ final class TestController extends AbstractController
                 'started_at' => (new \DateTimeImmutable())->format('Y-m-d\TH:i:s\Z'),
                 'language' => '',
                 'thumbnail_url' => '',
-                'tag_ids' => '',
+                'tag_ids' => [],
                 'is_mature' => false,
             ]);
         }

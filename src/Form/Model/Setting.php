@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Form\Model;
 
 use App\Entity\Setting as SettingEntity;
-use DateTimeImmutable;
+use DateTime;
 
 final class Setting
 {
     public bool $notificationActive = false;
-    public ?string $notificationInactiveUntil = null;
+    public ?DateTime $notificationInactiveUntil = null;
 
     private function __construct()
     {
@@ -34,7 +34,7 @@ final class Setting
     }
 
     /**
-     * @return bool|DateTimeImmutable|null
+     * @return bool|DateTime|null
      */
     private static function convertCorrectValue(SettingEntity $setting)
     {
@@ -43,7 +43,7 @@ final class Setting
         }
 
         if ($setting->getKey() === 'notificationInactiveUntil') {
-            return new DateTimeImmutable($setting->getValue());
+            return new DateTime($setting->getValue());
         }
 
         return null;

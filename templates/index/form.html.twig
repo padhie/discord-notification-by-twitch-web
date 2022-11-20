@@ -6,7 +6,12 @@
             {% for notification in notificationsPerUser %}
                 {% include 'index/card.html.twig' with {'notification':notification, 'user':user} %}
             {% endfor %}
+        </div>
+    {% endfor %}
 
+    {% for username in userWithoutNotifications %}
+        <div id="box-{{ username }}" class="col-md-12 row">
+            <h1 class="h1 col-md-12 border-bottom">{{ username }}</h1>
         </div>
     {% endfor %}
 </div>

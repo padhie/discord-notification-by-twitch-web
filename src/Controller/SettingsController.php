@@ -9,6 +9,7 @@ use App\Repository\SettingRepository;
 use App\Repository\StateRepository;
 use App\Service\LastStateService;
 use App\Service\UserService;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -49,7 +50,7 @@ final class SettingsController extends AbstractController
     {
         $currentUser = $this->userService->getCurrentUser();
         if (!$currentUser->isAdmin()) {
-            $this->redirect('home');
+            return $this->redirectToRoute('home');
         }
 
         $fileStates = $this->lastStateService->getState();
@@ -60,8 +61,6 @@ final class SettingsController extends AbstractController
         $form = $this->settingForm->generate($settingModel);
 
         $this->handleForm($form, $request, $settingModel, $settingEntities);
-
-        dump($fileStates, $dbStates);
 
         return $this->render('settings/index.html.twig', [
             'lastFileState' => $fileStates,
@@ -93,8 +92,6 @@ final class SettingsController extends AbstractController
      */
     private function handleForm(FormInterface $form, Request $request, SettingModel $settingModel, array $settingEntities): FormInterface
     {
-        dump($settingModel);
-
         $form->handleRequest($request);
 
         if (!$form->isSubmitted()) {
@@ -124,6 +121,10 @@ final class SettingsController extends AbstractController
                 $newValue = $newValue
                     ? '1'
                     : '0';
+            }
+
+            if ($newValue instanceof DateTime) {
+                $newValue = $newValue->format('Y-m-d H:i:s');
             }
 
             $settingEntity->setValue($newValue);

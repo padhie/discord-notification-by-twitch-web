@@ -35,7 +35,7 @@ final class TwitchStreamCollection
     }
 
     /**
-     * @return array<int, string>
+     * @return array<string, string>
      */
     public function getAllNames(): array
     {

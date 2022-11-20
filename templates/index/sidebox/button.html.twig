@@ -7,11 +7,3 @@
         <span class="fa fa-save"></span>
     </button>
 </div>
-
-{% if currentUser != null and currentUser.isAdmin() %}
-    <div class="col-md-12 row m-0 p-0 mt-2">
-        <a href="{{ url('settings') }}" class="btn btn-warning col-md-12">
-            <span class="fa fa-fog"></span> Settings
-        </a>
-    </div>
-{% endif %}
