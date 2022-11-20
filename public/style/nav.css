@@ -1,0 +1,20 @@
+.nav-tabs-revers {
+    border-top: 1px solid #dee2e6;
+}
+
+.nav-tabs-revers .nav-item {
+    margin-top: -1px;
+}
+
+.nav-tabs-revers .nav-item.show .nav-link,
+.nav-tabs-revers .nav-link.active {
+    color: #495057;
+    background-color: #fff;
+    border-color: #fff #dee2e6 #dee2e6 #dee2e6;
+}
+
+.nav-tabs-revers .nav-link {
+    border: 1px solid transparent;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}

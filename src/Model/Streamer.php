@@ -19,7 +19,7 @@ final class Streamer implements JsonSerializable
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array{version?: int, items?: array<string, list<array{channel?: string, webHook?: string, message?: string}>>} $data
      */
     public static function createFromArray(array $data): self
     {

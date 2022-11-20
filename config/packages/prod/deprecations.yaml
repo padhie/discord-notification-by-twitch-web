@@ -1,0 +1,8 @@
+when@prod:
+    monolog:
+        channels: [deprecation]
+        handlers:
+            deprecation:
+                type: stream
+                channels: [deprecation]
+                path: php://stderr

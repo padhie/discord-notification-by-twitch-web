@@ -95,8 +95,8 @@ final class RunNotifyCommand extends Command
             return Command::SUCCESS;
         }
 
-        $dryRun = (bool) $input->getOption(self::OPTION_DRY_RUN) ?? true;
-        $forceNotify = (bool) $input->getOption(self::OPTION_FORCE_NOTIFY) ?? true;
+        $dryRun = (bool) ($input->getOption(self::OPTION_DRY_RUN) ?? true);
+        $forceNotify = (bool) ($input->getOption(self::OPTION_FORCE_NOTIFY) ?? true);
 
         if ($dryRun === true && $forceNotify === true) {
             $io->error('dry-run and force-notify not allow together');

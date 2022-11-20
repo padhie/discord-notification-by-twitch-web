@@ -12,6 +12,7 @@ RUN apt-get -y --no-install-recommends install wget
 RUN apt-get -y --no-install-recommends install curl
 RUN apt-get -y --no-install-recommends install zip
 RUN apt-get -y --no-install-recommends install unzip
+RUN apt-get -y --no-install-recommends install mariadb-client
 RUN apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 #RUN apt-get update \

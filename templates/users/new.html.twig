@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form id="form" name="form" action="{{ path('user_new') }}" method="post">
+        {{ include('users/form.html.twig') }}
+    </form>
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}

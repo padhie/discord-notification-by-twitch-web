@@ -1,0 +1,9 @@
+.testHook {
+    position: absolute;
+    left: 0;
+}
+
+.removeBox {
+    position: absolute;
+    right: 0;
+}

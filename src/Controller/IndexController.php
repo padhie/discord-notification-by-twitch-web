@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Notification;
 use App\Entity\User;
 use App\Repository\NotificationRepository;
+use App\Repository\UserRepository;
 use App\Service\UserService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,15 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 final class IndexController extends AbstractController
 {
     private NotificationRepository $notificationRepository;
+    private UserRepository $userRepository;
     private UserService $userService;
     private LoggerInterface $logger;
 
     public function __construct(
         NotificationRepository $notificationRepository,
+        UserRepository $userRepository,
         UserService $userService,
         LoggerInterface $logger
     ) {
         $this->notificationRepository = $notificationRepository;
+        $this->userRepository = $userRepository;
         $this->userService = $userService;
         $this->logger = $logger;
     }
@@ -33,10 +37,15 @@ final class IndexController extends AbstractController
      */
     public function index(): Response
     {
-        $user = $this->userService->getCurrentUser();
+        $currentUser = $this->userService->getCurrentUser();
+        $notifications = $this->getNotifications($currentUser);
+
+        $users = $currentUser->isAdmin() ? $this->userRepository->findAll() : [];
+        $userWithoutNotifications = $this->getUserWithoutNotifications($users, array_keys($notifications));
 
         return $this->render('index/index.html.twig', [
-            'notifications' => $this->getNotifications($user),
+            'notifications' => $notifications,
+            'userWithoutNotifications' => $userWithoutNotifications,
         ]);
     }
 
@@ -60,15 +69,15 @@ final class IndexController extends AbstractController
     }
 
     /**
-     * @return array<string, array<int, Notification>>
+     * @return array<string, list<Notification>>
      */
-    private function getNotifications(User $user): array
+    private function getNotifications(User $currentUser): array
     {
-        if ($user->isAdmin()) {
+        if ($currentUser->isAdmin()) {
             $notifications = $this->notificationRepository->findAll();
         } else {
             $notifications = $this->notificationRepository->findBy([
-                'user' => $user,
+                'user' => $currentUser,
             ]);
         }
 
@@ -83,5 +92,25 @@ final class IndexController extends AbstractController
         }
 
         return $groupedNotifications;
+    }
+
+    /**
+     * @param list<User> $users
+     * @param list<string> $userWithNotifications
+     * @return list<string>
+     */
+    private function getUserWithoutNotifications(array $users, array $userWithNotifications): array
+    {
+        $userWithoutNotifications = [];
+        foreach ($users as $user) {
+            $username = $user->getUsername();
+            if (in_array($username, $userWithNotifications, true)) {
+                continue;
+            }
+
+            $userWithoutNotifications[] = $username;
+        }
+
+        return $userWithoutNotifications;
     }
 }

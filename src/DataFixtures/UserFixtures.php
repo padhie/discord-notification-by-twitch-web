@@ -20,9 +20,9 @@ final class UserFixtures extends Fixture
     {
         $user = new User();
 
-        $password = $this->passwordEncoder->encodePassword($user, 'L1b3rt4');
+        $password = $this->passwordEncoder->encodePassword($user, 'admin');
 
-        $user->setUsername('padhie')
+        $user->setUsername('admin')
             ->setPassword($password)
             ->setRoles([
                 'ROLE_ADMIN',

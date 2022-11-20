@@ -1,0 +1,21 @@
+{{ form_start(form) }}
+    <div class="card bg-light">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    {{ form_row(form.username) }}
+                    <br />
+                    {{ form_row(form.newPassword) }}
+                </div>
+
+                <div class="col-md-6 form-group">
+                    {{ form_row(form.roles) }}
+                </div>
+            </div>
+
+            <div class="pull-right">
+                {{ form_row(form.submit) }}
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}

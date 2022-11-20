@@ -1,0 +1,15 @@
+<div class="row mt-1 mb-3">
+    <div class="offset-1 col-md-9">
+        <ul class="nav nav-tabs-revers">
+            <li class="nav-item">
+                <a class="nav-link {% if page == 'home' %}active{% endif %}" href="{{ url('home') }}">Notifications</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if page == 'users' %}active{% endif %}" href="{{ url('users') }}">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if page == 'settings' %}active{% endif %}" href="{{ url('settings') }}">Settings</a>
+            </li>
+        </ul>
+    </div>
+</div>
