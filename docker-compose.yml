@@ -15,7 +15,7 @@ services:
                 ipv4_address: 172.16.20.1
 
     php:
-        build: tools/docker/php7.4
+        build: tools/docker/php8.2
         container_name: discord_notification_php
         volumes:
             - ".:/application"

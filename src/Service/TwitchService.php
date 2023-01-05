@@ -17,12 +17,12 @@ use Psr\Log\LoggerInterface;
 final class TwitchService
 {
     private TwitchClient $twitchClient;
-    private LoggerInterface $logger;
 
-    public function __construct(TwitchClientBuilder $twitchClientBuilder, LoggerInterface $logger)
-    {
+    public function __construct(
+        TwitchClientBuilder $twitchClientBuilder,
+        private readonly LoggerInterface $logger
+    ) {
         $this->twitchClient = $twitchClientBuilder->build();
-        $this->logger = $logger;
     }
 
     public function getTwitchStream(string $channelName): ?Stream
@@ -40,23 +40,17 @@ final class TwitchService
         $streamCollection = new TwitchStreamCollection();
 
         try {
-            $requests = [];
+            $request = new GetStreamsRequest();
             foreach ($channelNames as $channelName) {
-                $requests[$channelName] = (new GetStreamsRequest())
-                    ->withUserLogin($channelName);
+                $request = $request->withUserLogin($channelName);
             }
 
-            $streamResponses = $this->twitchClient->sendAsync($requests);
+            $streamResponse = $this->twitchClient->send($request);
+            if (!$streamResponse instanceof GetStreamsResponse) {
+                return $streamCollection;
+            }
 
-            foreach ($streamResponses as $channelName => $streamResponse) {
-                if (!$streamResponse instanceof GetStreamsResponse) {
-                    $this->logger->warning('Failed StreamResponse', ['user' => $channelName]);
-                    continue;
-                }
-
-                $streams = $streamResponse->getStreams();
-                $stream = reset($streams);
-
+            foreach ($streamResponse->getStreams() as $stream) {
                 if (!$stream instanceof Stream) {
                     continue;
                 }

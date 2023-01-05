@@ -8,13 +8,10 @@ use App\Service\StreamerService;
 
 final class StreamerUpdater
 {
-    private StreamerService $streamerService;
-    private StreamerUpdaterCollection $streamerUpdaterCollection;
-
-    public function __construct(StreamerService $streamerService, StreamerUpdaterCollection $streamerUpdaterCollection)
-    {
-        $this->streamerService = $streamerService;
-        $this->streamerUpdaterCollection = $streamerUpdaterCollection;
+    public function __construct(
+        private readonly StreamerService $streamerService,
+        private readonly StreamerUpdaterCollection $streamerUpdaterCollection
+    ) {
     }
 
     public function update(): void

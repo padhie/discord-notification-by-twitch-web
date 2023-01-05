@@ -4,7 +4,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
@@ -45,7 +45,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "friendsofphp/php-cs-fixer": "^2.18",
+        "friendsofphp/php-cs-fixer": "^3.12",
         "maglnet/composer-require-checker": "^3.2",
         "phpstan/phpstan": "^1.9",
         "phpstan/phpstan-doctrine": "^1.3",
@@ -106,10 +106,14 @@
             "@php bin/console doctrine:migrations:sync-metadata-storage",
             "@php bin/console doctrine:migrations:version --add --all -n -q",
             "@php bin/console doctrine:migrations:migrate -n -q",
-            "mysql -u root -h 172.16.20.3 -p discord_notification < tools/database/dump.sql\nroot",
+            "mysql -u root -h 172.16.20.3 -p discord_notification < tools/database/dump.sql",
             "@deploy"
         ],
         "test": [
+            "@phpstan",
+            "@require-check"
+        ],
+        "test81": [
             "@php-cs-fixer-dry",
             "@phpstan",
             "@require-check"

@@ -14,18 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SaveController extends AbstractController
 {
-    private NotificationRepository $notificationRepository;
-    private UserRepository $userRepository;
-    private UserService $userService;
-
     public function __construct(
-        NotificationRepository $notificationRepository,
-        UserRepository $userRepository,
-        UserService $userService
+        private readonly NotificationRepository $notificationRepository,
+        private readonly UserRepository $userRepository,
+        private readonly UserService $userService
     ) {
-        $this->notificationRepository = $notificationRepository;
-        $this->userRepository = $userRepository;
-        $this->userService = $userService;
     }
 
     /**

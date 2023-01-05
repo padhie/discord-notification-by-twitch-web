@@ -10,15 +10,11 @@ use App\Repository\NotificationRepository;
 
 final class OutputHelper
 {
-    private TwitchConfig $twitchConfig;
-    private InfluxConfig $influxConfig;
-    private NotificationRepository $notificationRepository;
-
-    public function __construct(TwitchConfig $twitchConfig, InfluxConfig $influxConfig, NotificationRepository $notificationRepository)
-    {
-        $this->twitchConfig = $twitchConfig;
-        $this->influxConfig = $influxConfig;
-        $this->notificationRepository = $notificationRepository;
+    public function __construct(
+        private readonly TwitchConfig $twitchConfig,
+        private readonly InfluxConfig $influxConfig,
+        private readonly NotificationRepository $notificationRepository
+    ) {
     }
 
     public function generateOutput(): Output

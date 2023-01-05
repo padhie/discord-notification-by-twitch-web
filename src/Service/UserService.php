@@ -12,15 +12,10 @@ final class UserService
 {
     private const DEFAULT_USERNAME = 'anonymous';
 
-    private Security $security;
-    private UserRepository $userRepository;
-
     public function __construct(
-        Security $security,
-        UserRepository $userRepository
+        private readonly Security $security,
+        private readonly UserRepository $userRepository
     ) {
-        $this->security = $security;
-        $this->userRepository = $userRepository;
     }
 
     public function getCurrentUser(bool $useDefault = true): User

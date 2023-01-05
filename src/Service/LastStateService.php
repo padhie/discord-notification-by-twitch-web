@@ -10,11 +10,8 @@ final class LastStateService
 {
     private const FILE = 'data/last_state.json';
 
-    private string $baseDirectory;
-
-    public function __construct(string $baseDirectory)
+    public function __construct(private readonly string $baseDirectory)
     {
-        $this->baseDirectory = $baseDirectory;
     }
 
     public function getState(): State

@@ -15,14 +15,6 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 final class UserAuthenticator extends AbstractGuardAuthenticator
 {
-    /** @var array<string, string> */
-    private array $users;
-
-    public function __construct(string $users)
-    {
-        $this->users = json_decode($users, true, 512, JSON_THROW_ON_ERROR);
-    }
-
     /**
      * Called on every request to decide if this authenticator should be
      * used for the request. Returning `false` will cause this authenticator

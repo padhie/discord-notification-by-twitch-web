@@ -9,11 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class ApiController extends AbstractController
 {
-    private OutputHelper $outputHelper;
-
-    public function __construct(OutputHelper $outputHelper)
+    public function __construct(private readonly OutputHelper $outputHelper)
     {
-        $this->outputHelper = $outputHelper;
     }
 
     /**

@@ -13,13 +13,9 @@ final class UpdateCommand extends Command
 {
     protected static $defaultName = 'app:update';
 
-    private StreamerUpdater $streamerUpdater;
-
-    public function __construct(StreamerUpdater $streamerUpdater)
+    public function __construct(private readonly StreamerUpdater $streamerUpdater)
     {
         parent::__construct(null);
-
-        $this->streamerUpdater = $streamerUpdater;
     }
 
     protected function configure(): void

@@ -45,10 +45,6 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Security\UserAuthenticator:
-        arguments:
-            $users: '%env(USERS)%'
-
     App\Service\StreamerService:
         arguments:
             $baseDirectory: '%env(ROOT_DIRECTORY)%'

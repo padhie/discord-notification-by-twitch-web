@@ -10,11 +10,8 @@ final class StreamerService
 {
     private const STREAMER_FILE = 'data/streamer.json';
 
-    private string $baseDirectory;
-
-    public function __construct(string $baseDirectory)
+    public function __construct(private readonly string $baseDirectory)
     {
-        $this->baseDirectory = $baseDirectory;
     }
 
     public function getRawStreamerContent(): string

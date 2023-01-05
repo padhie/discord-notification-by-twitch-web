@@ -11,13 +11,10 @@ use Padhie\TwitchApiBundle\TwitchClient;
 
 final class TwitchClientBuilder
 {
-    private string $clientId;
-    private string $authorization;
-
-    public function __construct(string $clientId, string $authorization)
-    {
-        $this->clientId = $clientId;
-        $this->authorization = $authorization;
+    public function __construct(
+        private readonly string $clientId,
+        private readonly string $authorization
+    ) {
     }
 
     public function build(): TwitchClient

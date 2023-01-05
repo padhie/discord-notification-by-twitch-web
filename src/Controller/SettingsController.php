@@ -20,27 +20,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SettingsController extends AbstractController
 {
-    private LastStateService $lastStateService;
-    private UserService $userService;
-    private StateRepository $stateRepository;
-    private SettingRepository $settingRepository;
-    private SettingForm $settingForm;
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        LastStateService $lastStateService,
-        UserService $userService,
-        StateRepository $stateRepository,
-        SettingRepository $settingRepository,
-        SettingForm $settingForm,
-        EntityManagerInterface $entityManager
+        private readonly LastStateService $lastStateService,
+        private readonly UserService $userService,
+        private readonly StateRepository $stateRepository,
+        private readonly SettingRepository $settingRepository,
+        private readonly SettingForm $settingForm,
+        private readonly EntityManagerInterface $entityManager
     ) {
-        $this->lastStateService = $lastStateService;
-        $this->userService = $userService;
-        $this->stateRepository = $stateRepository;
-        $this->settingRepository = $settingRepository;
-        $this->settingForm = $settingForm;
-        $this->entityManager = $entityManager;
     }
 
     /**

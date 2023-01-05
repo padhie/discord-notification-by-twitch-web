@@ -8,11 +8,11 @@ use Padhie\TwitchApiBundle\Response\Streams\Stream;
 
 final class TwitchStreamCollection
 {
-    /** @var array<string, Stream> */
+    /** @var list<Stream> */
     private array $streams = [];
 
     /**
-     * @param array<int, Stream> $streams
+     * @param list<Stream> $streams
      */
     public function __construct(array $streams = [])
     {

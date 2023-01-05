@@ -15,21 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class IndexController extends AbstractController
 {
-    private NotificationRepository $notificationRepository;
-    private UserRepository $userRepository;
-    private UserService $userService;
-    private LoggerInterface $logger;
-
     public function __construct(
-        NotificationRepository $notificationRepository,
-        UserRepository $userRepository,
-        UserService $userService,
-        LoggerInterface $logger
+        private readonly NotificationRepository $notificationRepository,
+        private readonly UserRepository $userRepository,
+        private readonly UserService $userService,
+        private readonly LoggerInterface $logger
     ) {
-        $this->notificationRepository = $notificationRepository;
-        $this->userRepository = $userRepository;
-        $this->userService = $userService;
-        $this->logger = $logger;
     }
 
     /**

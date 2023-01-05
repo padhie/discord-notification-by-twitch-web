@@ -17,24 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class TestController extends AbstractController
 {
-    private NotificationRepository $notificationRepository;
-    private TwitchService $twitchService;
-    private DiscordService $discordService;
-    private InfluxService $influxService;
-    private MessagePreparer $messagePreparer;
-
     public function __construct(
-        NotificationRepository $notificationRepository,
-        TwitchService $twitchService,
-        DiscordService $discordService,
-        InfluxService $influxService,
-        MessagePreparer $messagePreparer
+        private readonly NotificationRepository $notificationRepository,
+        private readonly TwitchService $twitchService,
+        private readonly DiscordService $discordService,
+        private readonly InfluxService $influxService,
+        private readonly MessagePreparer $messagePreparer
     ) {
-        $this->notificationRepository = $notificationRepository;
-        $this->twitchService = $twitchService;
-        $this->discordService = $discordService;
-        $this->influxService = $influxService;
-        $this->messagePreparer = $messagePreparer;
     }
 
     /**

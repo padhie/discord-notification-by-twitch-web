@@ -8,13 +8,6 @@ security:
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory:
-            memory:
-                users:
-                    # Password = test123
-                    ismail: { password: '$argon2id$v=19$m=65536,t=4,p=1$50TJdQzd0S1NlXCnf19Xnw$DKOZBSziACsy21dLVImxfDcATlycOWuj44K7cMzLtFM', roles: ['ROLE_USER', 'ROLE_ADMIN'] }
-                    patrick: { password: '$argon2id$v=19$m=65536,t=4,p=1$50TJdQzd0S1NlXCnf19Xnw$DKOZBSziACsy21dLVImxfDcATlycOWuj44K7cMzLtFM', roles: ['ROLE_USER', 'ROLE_ADMIN'] }
-
         app_user_provider:
             entity:
                 class: App\Entity\User
@@ -28,9 +21,8 @@ security:
         main:
             security: true
             http_basic:
-                realm: Secured Area
+                realm: "Secured Area"
             provider: app_user_provider
-            # provider: users_in_memory
             lazy: false
             anonymous: false
 

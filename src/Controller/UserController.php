@@ -20,24 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class UserController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-    private UserRepository $userRepository;
-    private UserForm $userForm;
-    private UserPasswordHasherInterface $passwordEncoder;
-    private UserService $userService;
-
     public function __construct(
-        EntityManagerInterface      $entityManager,
-        UserRepository              $userRepository,
-        UserForm                    $userForm,
-        UserPasswordHasherInterface $passwordEncoder,
-        UserService $userService
+        private readonly EntityManagerInterface $entityManager,
+        private readonly UserRepository $userRepository,
+        private readonly UserForm $userForm,
+        private readonly UserPasswordHasherInterface $passwordEncoder,
+        private readonly UserService $userService
     ) {
-        $this->entityManager = $entityManager;
-        $this->userRepository = $userRepository;
-        $this->userForm = $userForm;
-        $this->passwordEncoder = $passwordEncoder;
-        $this->userService = $userService;
     }
 
     /**

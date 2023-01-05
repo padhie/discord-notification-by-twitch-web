@@ -10,12 +10,10 @@ use GuzzleHttp\Client;
 final class InfluxService
 {
     private Client $client;
-    private InfluxConfig $influxConfig;
 
-    public function __construct(InfluxConfig $influxConfig)
+    public function __construct(private readonly InfluxConfig $influxConfig)
     {
         $this->client = new Client();
-        $this->influxConfig = $influxConfig;
     }
 
     public function push(string $channel, int $value): void

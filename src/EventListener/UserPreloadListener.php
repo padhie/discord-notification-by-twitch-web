@@ -12,15 +12,10 @@ use Twig\Environment as TwigEnvironment;
 
 final class UserPreloadListener
 {
-    private TwigEnvironment $twig;
-    private UserService $userService;
-
     public function __construct(
-        TwigEnvironment $twig,
-        UserService $userService
+        private readonly TwigEnvironment $twig,
+        private readonly UserService $userService
     ) {
-        $this->twig = $twig;
-        $this->userService = $userService;
     }
 
     /**

@@ -31,32 +31,16 @@ final class RunNotifyCommand extends Command
 
     protected static $defaultName = 'app:run-notify';
 
-    private TwitchService $twitchService;
-    private DiscordService $discordService;
-    private InfluxService $influxService;
-    private NotificationRepository $notificationRepository;
-    private StateRepository $stateRepository;
-    private SettingRepository $settingRepository;
-    private LoggerInterface $logger;
-
     public function __construct(
-        TwitchService $twitchService,
-        DiscordService $discordService,
-        InfluxService $influxService,
-        NotificationRepository $notificationRepository,
-        StateRepository $stateRepository,
-        SettingRepository $settingRepository,
-        LoggerInterface $logger
+        private readonly TwitchService $twitchService,
+        private readonly DiscordService $discordService,
+        private readonly InfluxService $influxService,
+        private readonly NotificationRepository $notificationRepository,
+        private readonly StateRepository $stateRepository,
+        private readonly SettingRepository $settingRepository,
+        private readonly LoggerInterface $logger
     ) {
         parent::__construct();
-
-        $this->twitchService = $twitchService;
-        $this->discordService = $discordService;
-        $this->influxService = $influxService;
-        $this->notificationRepository = $notificationRepository;
-        $this->stateRepository = $stateRepository;
-        $this->settingRepository = $settingRepository;
-        $this->logger = $logger;
     }
 
     protected function configure(): void
