@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="col-md-12 highlight bg-light mb-4">
+        <h1 class="h1">Twitch-Api Auth</h1>
+        <span>put this line into your .env</span><br />
+        <span class="font-weight-bold">
+            TWITCH_SECRET=<span id="auth-token"></span>
+        </span>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.getElementById('auth-token').innerText = 'loading';
+
+        const url = document.URL;
+        const twitchParams = url.substring(url.indexOf('#')+1).split('&');
+
+        let auth = 'unknown';
+        for (let param of twitchParams) {
+            if (!param.startsWith('access_token=')) {
+                continue;
+            }
+            auth = param.substring(param.indexOf('=')+1);
+        }
+
+        document.getElementById('auth-token').innerText = auth;
+    </script>
+{% endblock %}
