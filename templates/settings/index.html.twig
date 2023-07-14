@@ -1,16 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="col-md-12 highlight bg-light">
+    <div class="col-md-12 highlight bg-light mb-4">
+        <h1 class="h1">Twitch-Api Auth</h1>
+        <a class="btn btn-danger" href="{{ twitchAuthUrl }}">Twitch</a>
+    </div>
+
+    <div class="col-md-12 highlight bg-light mb-4">
         <h1 class="h1">last file state</h1>
         {{ lastFileState.jsonSerialize()|json_encode(constant('JSON_PRETTY_PRINT')) }}
     </div>
-    <div class="col-md-12 highlight bg-light">
+
+    <div class="col-md-12 highlight bg-light mb-4">
         <h1 class="h1">last database state</h1>
         {{ lastDbState|json_encode(constant('JSON_PRETTY_PRINT')) }}
     </div>
 
-    <div class="col-md-12 highlight bg-light">
+    <div class="col-md-12 highlight bg-light mb-4">
         <h1 class="h1">Configuration</h1>
         {{ form(settingForm) }}
     </div>

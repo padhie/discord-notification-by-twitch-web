@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Builder\TwitchAuthenticatorBuilder;
 use App\Entity\Setting;
 use App\Form\Model\Setting as SettingModel;
 use App\Form\SettingForm;
@@ -11,6 +12,7 @@ use App\Service\LastStateService;
 use App\Service\UserService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Padhie\TwitchApiBundle\TwitchAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -20,14 +22,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class SettingsController extends AbstractController
 {
+    private readonly TwitchAuthenticator $twitchAuthenticator;
+
     public function __construct(
         private readonly LastStateService $lastStateService,
         private readonly UserService $userService,
         private readonly StateRepository $stateRepository,
         private readonly SettingRepository $settingRepository,
         private readonly SettingForm $settingForm,
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
+        TwitchAuthenticatorBuilder $twitchAuthenticatorBuilder,
     ) {
+        $this->twitchAuthenticator = $twitchAuthenticatorBuilder->build();
     }
 
     /**
@@ -53,6 +59,7 @@ final class SettingsController extends AbstractController
             'lastFileState' => $fileStates,
             'lastDbState' => $dbStates,
             'settingForm' => $form->createView(),
+            'twitchAuthUrl' => $this->twitchAuthenticator->getAccessTokenUrl(),
         ]);
     }
 

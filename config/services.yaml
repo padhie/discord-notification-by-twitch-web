@@ -84,6 +84,11 @@ services:
             - '%env(TWITCH_CLIENT_ID)%'
             - '%env(TWITCH_SECRET)%'
 
+    App\Builder\TwitchAuthenticatorBuilder:
+        arguments:
+            - '%env(TWITCH_CLIENT_ID)%'
+            - '%env(TWITCH_REDIRECT_URL)%'
+
     Symfony\Component\Form\FormFactory:
         alias: form.factory
 
